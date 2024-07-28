@@ -21,6 +21,10 @@ const winningPositions = [
 function initGame() {
     currentPlayer = "X";
     gameGrid = ["", "", "", "", "", "", "", "", ""];
+    boxes.forEach((box, index) => {
+        box.innerText = "";
+        boxes[index].style.pointerEvents = "all";
+    })
     newGameBtn.classList.remove("active");
     gameInfo.innerText = `Current Player - ${currentPlayer}`;
 }
@@ -35,6 +39,16 @@ function swapTurn() {
     }
     //ui update
     gameInfo.innerText = `Current Player - ${currentPlayer}`;
+}
+
+function checkGameOver() {
+    let answer = "";
+    winningPositions.forEach((position) => {
+        if ((gameGrid[position[0]] !== "" || gameGrid[position[1]] !== "" || gameGrid[position[2]] !== "" ||)
+            && (gameGrid[position[0]] === gameGrid[position[1]]) && (gameGrid[position[1]] === gameGrid[position[2]])) {
+
+        }
+    })
 }
 
 function handleClick(index) {
