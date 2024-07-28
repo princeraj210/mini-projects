@@ -24,6 +24,7 @@ function initGame() {
     boxes.forEach((box, index) => {
         box.innerText = "";
         boxes[index].style.pointerEvents = "all";
+        box.classList = `box box${index + 1}`;
     })
     newGameBtn.classList.remove("active");
     gameInfo.innerText = `Current Player - ${currentPlayer}`;
@@ -44,11 +45,36 @@ function swapTurn() {
 function checkGameOver() {
     let answer = "";
     winningPositions.forEach((position) => {
-        if ((gameGrid[position[0]] !== "" || gameGrid[position[1]] !== "" || gameGrid[position[2]] !== "" ||)
+        if ((gameGrid[position[0]] !== "" || gameGrid[position[1]] !== "" || gameGrid[position[2]] !== "")
             && (gameGrid[position[0]] === gameGrid[position[1]]) && (gameGrid[position[1]] === gameGrid[position[2]])) {
-
+            if (gameGrid[position[0]] === "X")
+                answer = "X";
+            else
+                answer = "O";
+            boxes.forEach((box) => {
+                box.style.pointerEvents = "none";
+            })
+            boxes[position[0]].classList.add("win");
+            boxes[position[1]].classList.add("win");
+            boxes[position[2]].classList.add("win");
         }
-    })
+    });
+    if (answer !== "") {
+        gameInfo.innerText = `Winner player - ${answer}`;
+        newGameBtn.classList.add("active");
+        return;
+    }
+    //let check wheather there is a tie
+    let fillCount = 0;
+    gameGrid.forEach((box) => {
+        if (box !== "")
+            fillCount++;
+    });
+    //board is fill game is tie
+    if (fillCount == 9) {
+        gameInfo.innerText = "Game Tied !";
+        newGameBtn.classList.add("active");
+    }
 }
 
 function handleClick(index) {
